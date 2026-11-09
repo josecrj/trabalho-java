@@ -17,7 +17,7 @@ public class EstagiarioDAO extends BaseGenericaDAO<Estagiario> {
             return null;
         }
 
-        int codigoAtual = 0;
+        int codigoAtual = this.Repositorio.getLast().getCodigo();
         novo.setCodigo(codigoAtual + 1);
         this.Repositorio.add(novo);
         return novo;

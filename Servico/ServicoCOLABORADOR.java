@@ -17,23 +17,23 @@ public class ServicoCOLABORADOR extends BaseGenericaSRV<Colaborador> {
     public Colaborador create(Colaborador novo) {
 
         if (novo == null) {
-            throw new IllegalArgumentException("O colaborador não pode ser nulo.");
+            return null;
         }
 
         if (novo.getCodigo() < 0) {
-            throw new IllegalArgumentException("O código do colaborador não pode ser negativo; use zero para gerar automaticamente.");
+            return null;
         }
 
         if (novo.getNome() == null || novo.getNome().isBlank()) {
-            throw new IllegalArgumentException("O nome do colaborador não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (novo.getCpf() == null || novo.getCpf().isBlank()) {
-            throw new IllegalArgumentException("O CPF do colaborador não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (novo.getCargo() == null || novo.getCargo().isBlank()) {
-            throw new IllegalArgumentException("O cargo do colaborador não pode ser nulo ou vazio.");
+            return null;
         }
 
         return this.DAO.create(novo);
@@ -44,27 +44,27 @@ public class ServicoCOLABORADOR extends BaseGenericaSRV<Colaborador> {
     public Colaborador update(Colaborador alterado) {
 
         if (alterado == null) {
-            throw new IllegalArgumentException("O colaborador não pode ser nulo.");
+            return null;
         }
 
         if (alterado.getCodigo() <= 0) {
-            throw new IllegalArgumentException("O código do colaborador deve ser maior que zero.");
+            return null;
         }
 
         if (alterado.getNome() == null || alterado.getNome().isBlank()) {
-            throw new IllegalArgumentException("O nome do colaborador não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (alterado.getCpf() == null || alterado.getCpf().isBlank()) {
-            throw new IllegalArgumentException("O CPF do colaborador não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (alterado.getCargo() == null || alterado.getCargo().isBlank()) {
-            throw new IllegalArgumentException("O cargo do colaborador não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (this.DAO.readOne(alterado.getCodigo()) == null) {
-            throw new IllegalArgumentException("Colaborador não encontrado.");
+            return null;
         }
 
         return this.DAO.update(alterado);
@@ -73,13 +73,7 @@ public class ServicoCOLABORADOR extends BaseGenericaSRV<Colaborador> {
     @Override 
     public ArrayList<Colaborador> readAll() {
 
-        ArrayList<Colaborador> registros = this.DAO.readAll();
-
-        if(registros == null || registros.isEmpty()) {
-            throw new IllegalStateException("Não existem colaboradores cadastrados.");
-        }
-
-        return registros;
+        return this.DAO.readAll();
     }
 
     @Override 
@@ -87,29 +81,17 @@ public class ServicoCOLABORADOR extends BaseGenericaSRV<Colaborador> {
     public Colaborador readOne(int codigo) {
 
         if (codigo <= 0) {
-            throw new IllegalArgumentException("O código do colaborador deve ser maior que zero.");
+            return null;
         }
 
-        Colaborador registro = this.DAO.readOne(codigo);
-
-        if (registro == null) {
-            throw new IllegalArgumentException("Colaborador não encontrado.");
-        }
-
-        return registro;
+        return this.DAO.readOne(codigo);
     }
 
     @Override 
     public Colaborador deletePorId(int id) {
 
         if (id <= 0) {
-            throw new IllegalArgumentException("O código do colaborador deve ser maior que zero.");
-        }
-
-        Colaborador registroParaDeletar = this.DAO.readOne(id);
-
-        if (registroParaDeletar == null) {
-            throw new IllegalArgumentException("Colaborador não encontrado.");
+            return null;
         }
 
         return this.DAO.deletePorId(id);

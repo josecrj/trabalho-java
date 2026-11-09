@@ -19,7 +19,6 @@ public class EgressoDAO extends BaseGenericaDAO<Egresso> {
         if (novo == null) {
             return null;
         }
-        this.Repositorio.getLast().getCodigo();
         int codigoAtual = this.Repositorio.getLast().getCodigo();
         novo.setCodigo(codigoAtual + 1);
         this.Repositorio.add(novo);

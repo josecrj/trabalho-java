@@ -9,7 +9,7 @@ public class EgressoFakeDB extends BaseGenericaFakeDB<Egresso>{
 
 public void autoPreencher(){
 
-this.dados.add(new Egresso(11, "Jose Carlos" , "08883116135", 2028, "Engenharia da Computacao", "infrestutura de redes"));
+this.dados.add(new Egresso(11, "Jose Carlos" , "08883116135", 2025, "Engenharia da Computacao", "infrestutura de redes"));
 this.dados.add(new Egresso(14, "Ana Oliveira" , "11122233344", 2024, "Sistemas de Informacao", "desenvolvimento web"));
 this.dados.add(new Egresso(15 , "Carlos Santos" , "55566677788", 2027, "Ciencia da Computacao", "inteligencia artificial"));
 

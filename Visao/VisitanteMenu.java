@@ -1,7 +1,7 @@
 package Visao;
 
 import java.util.Scanner;
-import java.util.InputMismatchException;
+import java.util.ArrayList;
 
 import Dominio.Visitante;
 import Servico.ServicoVISITANTE;
@@ -10,7 +10,6 @@ public class VisitanteMenu {
 
     private Scanner scanner = new Scanner(System.in);
 
-    // O Menu possui um Serviço de Visitante
     private ServicoVISITANTE servicoVisitante = new ServicoVISITANTE();
 
 
@@ -30,7 +29,6 @@ public class VisitanteMenu {
 
             System.out.print("Escolha uma opção: ");
 
-            // Verifica se o usuário digitou um número
             if (!scanner.hasNextInt()) {
                 System.out.println("Digite apenas números.");
                 scanner.nextLine();
@@ -40,59 +38,40 @@ public class VisitanteMenu {
             opcao = scanner.nextInt();
             scanner.nextLine();
 
-            try {
+            switch (opcao) {
 
-                switch (opcao) {
+                case 1:
+                    cadastrar();
+                    break;
 
-                    case 1:
-                        cadastrar();
-                        break;
+                case 2:
+                    listarTodos();
+                    break;
 
-                    case 2:
-                        listarTodos();
-                        break;
+                case 3:
+                    atualizar();
+                    break;
 
-                    case 3:
-                        atualizar();
-                        break;
+                case 4:
+                    buscarPorCodigo();
+                    break;
 
-                    case 4:
-                        buscarPorCodigo();
-                        break;
+                case 5:
+                    excluir();
+                    break;
 
-                    case 5:
-                        excluir();
-                        break;
+                case 0:
+                    System.out.println("Saindo do menu...");
+                    break;
 
-                    case 0:
-                        System.out.println("Saindo do menu...");
-                        break;
-
-                    default:
-                        System.out.println("Opção inválida.");
-                }
-
-            } catch (InputMismatchException erro) {
-
-                System.out.println("Digite apenas números inteiros dentro do intervalo permitido.");
-                scanner.nextLine();
-
-            } catch (IllegalArgumentException erro) {
-
-                System.out.println("Erro: " + erro.getMessage());
-
-            } catch (IllegalStateException erro) {
-
-                System.out.println("Erro: " + erro.getMessage());
+                default:
+                    System.out.println("Opção inválida.");
             }
 
         } while (opcao != 0);
     }
 
 
-    // =========================
-    // CADASTRAR
-    // =========================
 
     private void cadastrar() {
 
@@ -117,6 +96,11 @@ public class VisitanteMenu {
         String motivoVisita = scanner.nextLine();
 
         System.out.print("Número do crachá: ");
+        if (!scanner.hasNextInt()) {
+            System.out.println("Número do crachá inválido.");
+            scanner.nextLine();
+            return;
+        }
         int crachaNumero = scanner.nextInt();
         scanner.nextLine();
 
@@ -139,35 +123,48 @@ public class VisitanteMenu {
 
         Visitante criado = servicoVisitante.create(novo);
 
+        if (criado == null) {
+            System.out.println("Dados inválidos. Visitante não cadastrado.");
+            return;
+        }
+
         System.out.println("\nVisitante cadastrado com sucesso!");
 
         criado.exibir();
     }
 
 
-    // =========================
-    // LISTAR TODOS
-    // =========================
+   
 
     private void listarTodos() {
 
         System.out.println("\n=== LISTA DE VISITANTES ===");
 
-        for (Visitante visitante : servicoVisitante.readAll()) {
+        ArrayList<Visitante> visitantes = servicoVisitante.readAll();
+
+        if (visitantes == null || visitantes.isEmpty()) {
+            System.out.println("Nenhum visitante cadastrado.");
+            return;
+        }
+
+        for (Visitante visitante : visitantes) {
 
             visitante.exibir();
         }
     }
 
 
-    // =========================
-    // BUSCAR
-    // =========================
+  
 
     private void buscarPorCodigo() {
 
         System.out.print("Digite o código: ");
 
+        if (!scanner.hasNextInt()) {
+            System.out.println("Código inválido.");
+            scanner.nextLine();
+            return;
+        }
         int codigo = scanner.nextInt();
         scanner.nextLine();
 
@@ -175,19 +172,26 @@ public class VisitanteMenu {
         Visitante visitante =
             servicoVisitante.readOne(codigo);
 
+        if (visitante == null) {
+            System.out.println("Visitante não encontrado.");
+            return;
+        }
 
         visitante.exibir();
     }
 
 
-    // =========================
-    // ATUALIZAR
-    // =========================
+   
 
     private void atualizar() {
 
         System.out.print("Código do visitante: ");
 
+        if (!scanner.hasNextInt()) {
+            System.out.println("Código inválido.");
+            scanner.nextLine();
+            return;
+        }
         int codigo = scanner.nextInt();
         scanner.nextLine();
 
@@ -195,34 +199,70 @@ public class VisitanteMenu {
         Visitante visitante =
             servicoVisitante.readOne(codigo);
 
+        if (visitante == null) {
+            System.out.println("Visitante não encontrado.");
+            return;
+        }
 
         System.out.print("Novo nome: ");
         String nome = scanner.nextLine();
 
+        System.out.print("Novo CPF: ");
+        String cpf = scanner.nextLine();
+
+        System.out.print("Novo email: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Novo telefone: ");
+        String telefone = scanner.nextLine();
+
+        System.out.print("Novo endereço: ");
+        String endereco = scanner.nextLine();
+
+        System.out.print("Novo motivo da visita: ");
+        String motivoVisita = scanner.nextLine();
+
+        System.out.print("Novo número do crachá: ");
+        if (!scanner.hasNextInt()) {
+            System.out.println("Número do crachá inválido.");
+            scanner.nextLine();
+            return;
+        }
+        int crachaNumero = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Novo setor da visita: ");
+        String setorVisita = scanner.nextLine();
+
         Visitante alterado = new Visitante(
-            visitante.getCodigo(), nome, visitante.getCpf(),
-            visitante.getEmail(), visitante.getTelefone(), visitante.getEndereco(),
-            visitante.getMotivoVisita(), visitante.getCrachaNumero(),
-            visitante.getSetorVisita());
+            visitante.getCodigo(), nome, cpf,
+            email, telefone, endereco,
+            motivoVisita, crachaNumero, setorVisita);
 
 
-        servicoVisitante.update(alterado);
+        Visitante resultado = servicoVisitante.update(alterado);
 
+        if (resultado == null) {
+            System.out.println("Dados inválidos. Visitante não atualizado.");
+            return;
+        }
 
-        System.out.println("Visitante atualizado!");
+        System.out.println("Visitante atualizado com sucesso!");
 
-        alterado.exibir();
+        resultado.exibir();
     }
 
 
-    // =========================
-    // EXCLUIR
-    // =========================
 
     private void excluir() {
 
         System.out.print("Código do visitante: ");
 
+        if (!scanner.hasNextInt()) {
+            System.out.println("Código inválido.");
+            scanner.nextLine();
+            return;
+        }
         int codigo = scanner.nextInt();
         scanner.nextLine();
 
@@ -230,6 +270,10 @@ public class VisitanteMenu {
         Visitante visitante =
             servicoVisitante.readOne(codigo);
 
+        if (visitante == null) {
+            System.out.println("Visitante não encontrado.");
+            return;
+        }
 
         visitante.exibir();
 
@@ -241,9 +285,11 @@ public class VisitanteMenu {
 
         if (resposta.equalsIgnoreCase("S")) {
 
-            servicoVisitante.deletePorId(codigo);
+            Visitante excluido = servicoVisitante.deletePorId(codigo);
 
-            System.out.println("Visitante excluído.");
+            if (excluido != null) {
+                System.out.println("Visitante excluído com sucesso.");
+            }
 
         } else {
 

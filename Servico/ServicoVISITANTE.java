@@ -17,43 +17,43 @@ public class ServicoVISITANTE extends BaseGenericaSRV<Visitante> {
     public Visitante create(Visitante novo) {
 
         if (novo == null) {
-            throw new IllegalArgumentException("O visitante não pode ser nulo.");
+            return null;
         }
 
         if (novo.getCodigo() < 0) {
-            throw new IllegalArgumentException("O código do visitante não pode ser negativo; use zero para gerar automaticamente.");
+            return null;
         }
 
         if (novo.getNome() == null || novo.getNome().isBlank()) {
-            throw new IllegalArgumentException("O nome do visitante não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (novo.getCpf() == null || novo.getCpf().isBlank()) {
-            throw new IllegalArgumentException("O CPF do visitante não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (novo.getEmail() == null || novo.getEmail().isBlank()) {
-            throw new IllegalArgumentException("O email do visitante não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (novo.getTelefone() == null || novo.getTelefone().isBlank()) {
-            throw new IllegalArgumentException("O telefone do visitante não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (novo.getEndereco() == null || novo.getEndereco().isBlank()) {
-            throw new IllegalArgumentException("O endereço do visitante não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (novo.getMotivoVisita() == null || novo.getMotivoVisita().isBlank()) {
-            throw new IllegalArgumentException("O motivo da visita não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (novo.getSetorVisita() == null || novo.getSetorVisita().isBlank()) {
-            throw new IllegalArgumentException("O setor da visita não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (novo.getCrachaNumero() <= 0) {
-            throw new IllegalArgumentException("O número do crachá deve ser maior que zero.");
+            return null;
         }
 
         return this.DAO.create(novo);
@@ -64,47 +64,47 @@ public class ServicoVISITANTE extends BaseGenericaSRV<Visitante> {
     public Visitante update(Visitante alterado) {
 
         if (alterado == null) {
-            throw new IllegalArgumentException("O visitante não pode ser nulo.");
+            return null;
         }
 
         if (alterado.getCodigo() <= 0) {
-            throw new IllegalArgumentException("O código do visitante deve ser maior que zero.");
+            return null;
         }
 
         if (alterado.getNome() == null || alterado.getNome().isBlank()) {
-            throw new IllegalArgumentException("O nome do visitante não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (alterado.getCpf() == null || alterado.getCpf().isBlank()) {
-            throw new IllegalArgumentException("O CPF do visitante não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (alterado.getEmail() == null || alterado.getEmail().isBlank()) {
-            throw new IllegalArgumentException("O email do visitante não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (alterado.getTelefone() == null || alterado.getTelefone().isBlank()) {
-            throw new IllegalArgumentException("O telefone do visitante não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (alterado.getEndereco() == null || alterado.getEndereco().isBlank()) {
-            throw new IllegalArgumentException("O endereço do visitante não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (alterado.getMotivoVisita() == null || alterado.getMotivoVisita().isBlank()) {
-            throw new IllegalArgumentException("O motivo da visita não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (alterado.getSetorVisita() == null || alterado.getSetorVisita().isBlank()) {
-            throw new IllegalArgumentException("O setor da visita não pode ser nulo ou vazio.");
+            return null;
         }
 
         if (alterado.getCrachaNumero() <= 0) {
-            throw new IllegalArgumentException("O número do crachá deve ser maior que zero.");
+            return null;
         }
 
         if (this.DAO.readOne(alterado.getCodigo()) == null) {
-            throw new IllegalArgumentException("Visitante não encontrado.");
+            return null;
         }
 
         return this.DAO.update(alterado);
@@ -113,13 +113,7 @@ public class ServicoVISITANTE extends BaseGenericaSRV<Visitante> {
     @Override 
     public ArrayList<Visitante> readAll() {
 
-        ArrayList<Visitante> registros = this.DAO.readAll();
-
-        if(registros == null || registros.isEmpty()) {
-            throw new IllegalStateException("Não existem visitantes cadastrados.");
-        }
-
-        return registros;
+        return this.DAO.readAll();
     }
 
     @Override 
@@ -127,29 +121,17 @@ public class ServicoVISITANTE extends BaseGenericaSRV<Visitante> {
     public Visitante readOne(int codigo) {
 
         if (codigo <= 0) {
-            throw new IllegalArgumentException("O código do visitante deve ser maior que zero.");
+            return null;
         }
 
-        Visitante registro = this.DAO.readOne(codigo);
-
-        if (registro == null) {
-            throw new IllegalArgumentException("Visitante não encontrado.");
-        }
-
-        return registro;
+        return this.DAO.readOne(codigo);
     }
 
     @Override 
     public Visitante deletePorId(int id) {
 
         if (id <= 0) {
-            throw new IllegalArgumentException("O código do visitante deve ser maior que zero.");
-        }
-
-        Visitante registroParaDeletar = this.DAO.readOne(id);
-
-        if (registroParaDeletar == null) {
-            throw new IllegalArgumentException("Visitante não encontrado.");
+            return null;
         }
 
         return this.DAO.deletePorId(id);
